@@ -1,7 +1,7 @@
 # Task Manager
 
 # Overview
-This is a simple task management application built using Flask and SQLite. It allows users to create, update, and delete tasks.
+### This is a simple task management application built using Flask and SQLite. It allows users to create, update, and delete tasks.
 
 # Features:
 ## Task Creation: Users can add new tasks with titles and descriptions.
