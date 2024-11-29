@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <!-- Bootstrap CSS for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add background image to the entire page */
+
+        body {
+            background-image: url('https://www.pexels.com/photo/a-clean-white-desk-with-laptop-1149146/'); /* Task manager themed image */
+            background-size: cover; /* Ensures the image covers the entire page */
+            background-position: center; /* Centers the image */
+            background-attachment: fixed; /* Makes the background fixed when scrolling */
+            color: white; /* Default text color to white */
+            position: relative;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Dark overlay for better text visibility */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Light dark overlay */
+            z-index: -1; /* Make sure the overlay is behind the content */
+        }
+
+        .container h1, .container h4 {
+            color: white !important; /* Ensure headers are visible against the background */
+            font-weight: bold; /* Make headers bold */
+            text-align: center; /* Center align the headers */
+        }
+
+        .btn-outline-dark {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .btn-outline-dark:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .alert {
+            color: #000;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-color: #ddd;
+        }
+
+        .table thead th {
+            color: white;
+            font-weight: bold; /* Make table header text bold */
+        }
+
+        /* Centering the filter buttons */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .filter-buttons a {
+            font-weight: bold; /* Make the filter button text bold */
+        }
+
+        /* Centering all tasks section */
+        .task-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar or title for the application -->
+    <div class="container my-4">
+        <h1>Task Manager</h1>
+    </div>
+
+    <!-- Form for adding a new task -->
+
+    <div class="container my-3">
+        <h4>Add New Task</h4>
+        <form action="/" method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="title" class="form-control" id="title" required>
+            </div>
+            <div class="mb-3">
+                <label for="desc" class="form-label">Description</label>
+                <input type="text" name="desc" class="form-control" id="desc" required>
+            </div>
+            <button type="submit" class="btn btn-dark">Add Task</button>
+        </form>
+    </div>
+
+    <!-- Filter Buttons to filter by status -->
+
+    <div class="filter-buttons">
+        <a href="/" class="btn btn-dark">All</a>
+        <a href="/?status=pending" class="btn btn-dark">Pending</a>
+        <a href="/?status=completed" class="btn btn-dark">Completed</a>
+    </div>
+
+    <!-- Table displaying all tasks -->
+
+    <div class="container my-5 task-title">
+        <h4>All Tasks</h4>
+
+        {% if all_todos|length == 0 %}
+            <div class="alert alert-secondary" role="alert">
+                No existing tasks. Add a new task now!
+            </div>
+        {% else %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Created At</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for todo in all_todos %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td>{{ todo.title }}</td>
+                            <td>{{ todo.desc }}</td>
+                            <td>{{ todo.date_created }}</td>
+                            <td>{{ todo.status }}</td>
+                            <td>
+                                <a href="/update/{{ todo.sno }}" class="btn btn-outline-primary btn-sm">Edit</a>
+                                <a href="/delete/{{ todo.sno }}" class="btn btn-outline-danger btn-sm">Delete</a>
+                                {% if todo.status == 'Pending' %}
+                                    <a href="/complete/{{ todo.sno }}" class="btn btn-dark btn-sm">Mark as Completed</a>
+                                {% else %}
+                                    <a href="/incomplete/{{ todo.sno }}" class="btn btn-dark btn-sm">Mark as Pending</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
+    <!-- Optional Bootstrap JS for functionality -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
