@@ -15,7 +15,8 @@ This is a simple task management application built using Flask and SQLite. It al
 ## 1 Clone repository in particular folder
 ## 2 Create a Virtual Environment (Recommended):
         python -m venv venv
-## 3 install all the requirements from requirement.txt using command ( pip install -r requirement.txt)
+## 3 install all the requirements from requirement.txt using command 
+   pip install -r requirement.txt
   (Please ensure the version or packages intallation)
 ## 4 Run python app.py 
   Access the Application: Open your web browser and go to (http://127.0.0.1:5000/) link appears.
